@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity(repositoryClass="ConfigGroupRepository")
+ * @ORM\Entity()
  * @ORM\Table(name="axs_config_group")
  */
 class ConfigGroup

@@ -41,7 +41,7 @@ class ConfigGroup
 
     public function __toString()
     {
-        return $this->getTitle() ? : __CLASS__;
+        return $this->getTitle() ? : 'Группа параметров';
     }
 
     /**

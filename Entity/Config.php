@@ -46,7 +46,7 @@ class Config
 
     public function __toString()
     {
-        return $this->getTitle() ? : __CLASS__;
+        return $this->getTitle() ? : 'Параметр';
     }
 
     /**

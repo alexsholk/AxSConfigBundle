@@ -1,0 +1,24 @@
+services:
+    sonata.admin.axs.config:
+        class: AxS\ConfigBundle\Admin\ConfigAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Config", label: "Config" }
+        arguments:
+            - ~
+            - AxS\ConfigBundle\Entity\Config
+            - ~
+        calls:
+            - [setTranslationDomain, [AxSConfig]]
+            - [setLabelTranslatorStrategy, [@sonata.admin.label.strategy.underscore]]
+
+    sonata.admin.axs.config_group:
+        class: AxS\ConfigBundle\Admin\ConfigGroupAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Config", label: "Config Group" }
+        arguments:
+            - ~
+            - AxS\ConfigBundle\Entity\ConfigGroup
+            - ~
+        calls:
+            - [setTranslationDomain, [AxSConfigGroup]]
+            - [setLabelTranslatorStrategy, [@sonata.admin.label.strategy.underscore]]

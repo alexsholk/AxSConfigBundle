@@ -22,3 +22,10 @@ services:
         calls:
             - [setTranslationDomain, [AxSConfigGroup]]
             - [setLabelTranslatorStrategy, [@sonata.admin.label.strategy.underscore]]
+
+    axs.configuration:
+        class: Doctrine\ORM\EntityRepository
+        factory_service: doctrine.orm.default_entity_manager
+        factory_method: getRepository
+        arguments:
+            - AxS\ConfigBundle\Entity\Config

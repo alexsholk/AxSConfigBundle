@@ -10,3 +10,9 @@ form.label_group: Группа
 form.label_title: Название
 form.label_mask: Служебное имя
 form.label_value: Значение
+form.label_type: Тип
+form.label_required: Обязательный
+form.label_choices: Варианты или шаблон
+form.label_choices_array: Варианты в формате JSON
+form.label_choices_regex: Регулярное выражение, например /\w+/
+form.help_mask: Используйте заглавные буквы латинского алфавита, цифры, символ "_". Длина от 6 до 32 символов.

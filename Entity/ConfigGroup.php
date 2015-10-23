@@ -10,6 +10,7 @@ namespace AxS\ConfigBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
@@ -26,6 +27,7 @@ class ConfigGroup
 
     /**
      * @ORM\Column(type="string", length=80)
+     * @Assert\NotBlank()
      */
     protected $title;
 
@@ -85,7 +87,7 @@ class ConfigGroup
      *
      * @return ConfigGroup
      */
-    public function addConfig(\AxS\ConfigBundle\Entity\Config $config)
+    public function addConfig(Config $config)
     {
         $this->configs[] = $config;
 
@@ -97,7 +99,7 @@ class ConfigGroup
      *
      * @param \AxS\ConfigBundle\Entity\Config $config
      */
-    public function removeConfig(\AxS\ConfigBundle\Entity\Config $config)
+    public function removeConfig(Config $config)
     {
         $this->configs->removeElement($config);
     }

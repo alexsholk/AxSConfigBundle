@@ -16,10 +16,8 @@ class ConfigRepository extends EntityRepository
 
     protected function loadConfiguration()
     {
-        $configuration = $this->findAll();
-        foreach ($configuration as $config) {
-            /** @var Config $config */
-            $this->configuration[$config->getMask()] = $config->getValue();
+        foreach ($this->findAll() as $config) {
+            $this->configuration[$config->getMask()] = $config;
         }
     }
 
@@ -27,12 +25,25 @@ class ConfigRepository extends EntityRepository
      * @param $mask
      * @return string|null
      */
-    public function getValue($mask)
+    public function get($mask)
     {
         if ($this->configuration === null) {
             $this->loadConfiguration();
         }
 
-        return isset($this->configuration[$mask]) ? $this->configuration[$mask] : null;
+        return isset($this->configuration[$mask]) ? $this->configuration[$mask]->getNormalizedValue() : null;
+    }
+
+    /**
+     * @param $mask
+     * @return string|null
+     */
+    public function getRaw($mask)
+    {
+        if ($this->configuration === null) {
+            $this->loadConfiguration();
+        }
+
+        return isset($this->configuration[$mask]) ? $this->configuration[$mask]->getValue() : null;
     }
 }

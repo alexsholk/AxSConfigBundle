@@ -23,9 +23,24 @@ services:
             - [setTranslationDomain, [AxSConfigGroup]]
             - [setLabelTranslatorStrategy, [@sonata.admin.label.strategy.underscore]]
 
+    # Чтобы использовать настройки в шаблонах, можно добавить в config.yml:
+    #   twig:
+    #       globals:
+    #           configuration:  "@axs.configuration"
+    #
+    # В шаблонах:
+    # {{ configuration.get("MASK") }}
+    # {{ configuration.getRaw("MASK") }}
     axs.configuration:
         class: Doctrine\ORM\EntityRepository
         factory_service: doctrine.orm.default_entity_manager
         factory_method: getRepository
         arguments:
             - AxS\ConfigBundle\Entity\Config
+
+    validator.axs.config:
+        class: AxS\ConfigBundle\Validator\ConfigConstraintValidator
+        tags:
+            - { name: validator.constraint_validator, alias: axs_config_validator }
+        arguments:
+            - @validator

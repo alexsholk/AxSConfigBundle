@@ -1,5 +1,6 @@
 Config: Параметр
 breadcrumb.link_config_list: Параметры
+breadcrumb.link_config_delete: Подтверждение удаления
 list.label_title: Название
 list.label_mask: Служебное имя
 list.label_value: Значение

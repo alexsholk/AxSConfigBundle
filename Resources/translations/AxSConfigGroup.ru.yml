@@ -1,5 +1,7 @@
 Config Group: Группа параметров
 breadcrumb.link_config_group_list: Группы параметров
+breadcrumb.link_config_group_delete: Подтверждение удаления
 list.label_title: Название
+list.label__action: Действия
 filter.label_title: Название
 form.label_title: Название

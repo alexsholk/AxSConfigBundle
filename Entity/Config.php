@@ -39,6 +39,9 @@ class Config
         TYPE_URL = 12,
         TYPE_REGEX = 13;
 
+    const
+        PREVIEW_LENGTH = 80;
+
     protected $availableTypes = [
         self::TYPE_TEXT => 'Текст',
         self::TYPE_TEXTAREA => 'Текстовое поле',
@@ -66,7 +69,7 @@ class Config
     /**
      * @ORM\Column(type="string", length=32, unique = true)
      * @Assert\NotBlank()
-     * @Assert\Regex("/^[0-9A-Z_]{6,32}$/")
+     * @Assert\Regex("/^[0-9A-Z_]{4,32}$/")
      */
     protected $mask;
 
@@ -155,6 +158,24 @@ class Config
             default:
                 return $this->value;
         }
+    }
+
+    public function previewValue()
+    {
+        $value = $this->getNormalizedValue();
+        if (is_array($value)) {
+            $value = join(', ', $value);
+        }
+
+        if ($this->type == self::TYPE_WYSIWYG) {
+            $value = strip_tags(html_entity_decode($value));
+        }
+
+        if (mb_strlen($value) > self::PREVIEW_LENGTH) {
+            $value = mb_substr($value, 0, self::PREVIEW_LENGTH) . '...';
+        }
+
+        return $value;
     }
 
     /**

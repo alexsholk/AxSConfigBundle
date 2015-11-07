@@ -4,6 +4,8 @@ breadcrumb.link_config_delete: Подтверждение удаления
 list.label_title: Название
 list.label_mask: Служебное имя
 list.label_value: Значение
+list.label_preview_value: Значение
+list.label__action: Действия
 filter.label_group: Группа
 filter.label_title: Название
 filter.label_mask: Служебное имя
@@ -16,4 +18,4 @@ form.label_required: Обязательный
 form.label_choices: Варианты или шаблон
 form.label_choices_array: Варианты в формате JSON
 form.label_choices_regex: Регулярное выражение, например /\w+/
-form.help_mask: Используйте заглавные буквы латинского алфавита, цифры, символ "_". Длина от 6 до 32 символов.
+form.help_mask: Используйте заглавные буквы латинского алфавита, цифры, символ "_". Длина от 4 до 32 символов.

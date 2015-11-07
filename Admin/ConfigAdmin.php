@@ -19,15 +19,24 @@ class ConfigAdmin extends Admin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
+        $user = $this->getConfigurationPool()->getContainer()->get('security.context')->getToken()->getUser();
+
         /** @var Config $config */
         $config = $this->getSubject();
 
         $formMapper
             ->add('group')
             ->add('title')
-            ->add('mask', 'text', ['help' => 'form.help_mask'])
-            ->add('type', 'choice', ['choices' => $config->getAvailableTypes()])
-            ->add('required');
+            ->add('mask', 'text', [
+                'help' => 'form.help_mask',
+                'attr' => $user->isSuperAdmin() ? []: ['readonly' => true]
+            ]);
+
+        if ($user->isSuperAdmin()) {
+            $formMapper
+                ->add('type', 'choice', ['choices' => $config->getAvailableTypes()])
+                ->add('required');
+        }
 
         $options['required'] = $config->getRequired();
 
@@ -59,7 +68,10 @@ class ConfigAdmin extends Admin
             case Config::TYPE_SELECT:
                 $choices = (array)json_decode($config->getChoices());
                 $formMapper->add('value', 'choice', $options + ['choices' => $choices]);
-                $formMapper->add('choices', 'text', ['label' => 'form.label_choices_array']);
+
+                if ($user->isSuperAdmin()) {
+                    $formMapper->add('choices', 'text', ['label' => 'form.label_choices_array']);
+                }
                 break;
             case Config::TYPE_MULTICHOICE:
                 $choices = (array)json_decode($config->getChoices());
@@ -76,7 +88,9 @@ class ConfigAdmin extends Admin
                         return json_encode($value);
                     }));
 
-                $formMapper->add('choices', 'text', ['label' => 'form.label_choices_array']);
+                if ($user->isSuperAdmin()) {
+                    $formMapper->add('choices', 'text', ['label' => 'form.label_choices_array']);
+                }
                 break;
             case Config::TYPE_EMAIL:
                 $formMapper->add('value', 'email', $options);
@@ -85,8 +99,13 @@ class ConfigAdmin extends Admin
                 $formMapper->add('value', 'url', $options);
                 break;
             case Config::TYPE_REGEX:
-                $formMapper->add('value', 'text', $options);
-                $formMapper->add('choices', 'text', ['label' => 'form.label_choices_regex']);
+                $formMapper->add('value', 'text', $options + [
+                        'help' => $config->getChoices()
+                    ]);
+
+                if ($user->isSuperAdmin()) {
+                    $formMapper->add('choices', 'text', ['label' => 'form.label_choices_regex']);
+                }
                 break;
         }
     }
@@ -104,6 +123,12 @@ class ConfigAdmin extends Admin
         $listMapper
             ->addIdentifier('title')
             ->add('mask')
-            ->add('value');
+            ->add('previewValue')
+            ->add('_action', 'actions', [
+                'actions' => [
+                    'edit' => [],
+                    'delete' => [],
+                ]
+            ]);
     }
 }

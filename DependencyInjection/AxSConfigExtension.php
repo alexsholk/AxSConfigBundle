@@ -20,13 +20,15 @@ class AxSConfigExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter('axs_config.use_groups', $config['use_groups']);
+        foreach ($config as $key => $value) {
+            $container->setParameter('axs_config.' . $key, $value);
+        }
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
         $loader->load('admin_config.yml');
 
-        if (!empty($config['use_groups'])) {
+        if ($container->getParameter('axs_config.use_groups')) {
             $loader->load('admin_config_group.yml');
         }
     }

@@ -24,8 +24,13 @@ class ConfigAdmin extends Admin
         /** @var Config $config */
         $config = $this->getSubject();
 
+        $useGroups = $this->getConfigurationPool()->getContainer()->getParameter('axs_config.use_groups');
+
+        if ($useGroups) {
+            $formMapper->add('group');
+        }
+
         $formMapper
-            ->add('group')
             ->add('title')
             ->add('mask', 'text', [
                 'help' => 'form.help_mask',
@@ -112,8 +117,13 @@ class ConfigAdmin extends Admin
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
+        $useGroups = $this->getConfigurationPool()->getContainer()->getParameter('axs_config.use_groups');
+
+        if ($useGroups) {
+            $datagridMapper->add('group');
+        }
+
         $datagridMapper
-            ->add('group')
             ->add('title')
             ->add('mask');
     }

@@ -34,7 +34,8 @@ class ConfigAdmin extends Admin
             ->add('title')
             ->add('mask', 'text', [
                 'help' => 'form.help_mask',
-                'attr' => $user->isSuperAdmin() ? [] : ['readonly' => true]
+                'disabled' => !$user->isSuperAdmin(),
+                'read_only' => !$user->isSuperAdmin(),
             ]);
 
         if ($user->isSuperAdmin()) {
